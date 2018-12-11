@@ -1,0 +1,93 @@
+#1
+import numpy as np
+height = [72, 78, 69, 71, 76, 79]
+height_1 = np.array([72, 78, 69, 71, 76, 79])
+sub = height_1 - np.mean(height_1)
+height_s = sub/(np.std(height_1))
+print height_s
+#2
+from sklearn.datasets import load_boston
+boston = load_boston()
+attr = boston.data
+medV = boston.target
+print boston.DESCR
+#2.1-2.3
+print attr[9, :]
+print attr[19, 5]
+print attr[medV < 6]
+#2.4
+import matplotlib.pyplot as plt
+num_bins = 20
+plt.hist(medV, num_bins)
+plt.xlabel('Median Value')
+plt.show()
+
+plt.xlabel('Crime')
+plt.ylabel('Median Value')
+plt.scatter(attr[:,0], medV, c='b')
+plt.show()
+####################
+import pandas as pd
+insurance = pd.read_csv('insurance.csv')
+attr = insurance.values
+print insurance.columns.values
+#1
+from matplotlib import pyplot as plt
+
+target = attr[:, 4] == 1
+plt.scatter(attr[:, 2], attr[:, -1], c = target, alpha = 0.7) 
+plt.xlabel('Bmi')
+plt.ylabel('Medical Costs')
+cbar = plt.colorbar(ticks=[0,1])
+cbar.set_ticklabels(['Nonsmoking', 'Smoking'])
+
+plt.colorbar()
+plt.show()
+#2
+target = attr[:, 4]
+
+smoke = attr[target == 1, :]
+nonsmoke = attr[target == 0, :]
+num_bins = 10
+
+plt.hist(smoke[:,-1], num_bins, alpha =1)
+plt.hist(nonsmoke[:,-1], num_bins, alpha = 0.6)
+plt.xlabel('Medical Costs')
+plt.ylabel('Frequency')
+
+plt.legend(['Smoke','Nonsmoke'])
+plt.show()
+#3
+index = attr[:, 0]
+young = attr[index < 40,:]
+elder = attr[index > 40,:]
+num_bins = 15
+
+plt.hist(young[:,-1], num_bins, alpha =1)
+plt.hist(elder[:,-1], num_bins, alpha = 0.7)
+plt.xlabel('Medical Costs')
+plt.ylabel('Frequency')
+
+plt.legend(['Young People','Elder People'])
+plt.show()
+#4.1
+target = attr[:, -2]
+
+northwest = attr[target == 2, :]
+northeast = attr[target == 3, :]
+num_bins = 15
+plt.hist(northwest[:, -1], num_bins, alpha = 1)
+plt.hist(northeast[:, -1], num_bins, color = 'r', alpha = 0.5)
+plt.xlabel('Medical Costs')
+plt.ylabel('Frequency')
+
+plt.legend(['Northwest', 'Northeast'])
+plt.show()
+#4.2
+target = attr[:, 1] == 1 
+
+plt.scatter(attr[:,0], attr[:,-1], c = target, alpha = 0.7)
+plt.xlabel('Age')
+plt.ylabel('Medical Costs')
+plt.colorbar(ticks=[0,1])
+plt.show()
